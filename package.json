@@ -1,0 +1,43 @@
+{
+  "name": "appendix-retrieval-engine",
+  "version": "1.0.0",
+  "description": "Module 2: Appendix-Based Retrieval Engine for Scientific Claim Verification",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server-turso.js",
+    "start:old": "node backend/server.js",
+    "migrate": "node scripts/migrate-to-turso.js",
+    "ingest:arxiv": "node scripts/ingest-arxiv.js",
+    "ingest:nasa": "node scripts/ingest-nasa-ads.js",
+    "build": "node scripts/build-index.js"
+  },
+  "keywords": [
+    "scientific",
+    "claim",
+    "verification",
+    "appendix",
+    "retrieval"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.1025.0",
+    "@aws-sdk/client-ses": "^3.1025.0",
+    "@distube/ytdl-core": "^4.16.12",
+    "@libsql/client": "^0.15.15",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^12.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "groq-sdk": "^0.37.0",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.12.0",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.4",
+    "pdf-parse": "^1.1.1",
+    "tesseract.js": "^7.0.0",
+    "youtube-transcript": "^1.3.0",
+    "youtubei.js": "^17.0.1"
+  }
+}

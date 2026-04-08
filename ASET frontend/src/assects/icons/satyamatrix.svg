@@ -1,0 +1,54 @@
+<svg width="255" height="30" viewBox="0 0 212 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700&amp;display=swap");
+    text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      fill: white;
+      letter-spacing: 2.5px;
+      text-anchor: start;
+      dominant-baseline: middle;
+    }
+  </style>
+
+  <!-- Dot pattern (unchanged) -->
+  <ellipse cx="0.303" cy="2.426" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.752" cy="2.426" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="11.213" cy="2.426" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="16.662" cy="2.428" rx="1.818" ry="1.818" fill="white"/>
+  <ellipse cx="22.114" cy="2.426" rx="2.121" ry="2.122" fill="white"/>
+  <ellipse cx="27.577" cy="2.425" rx="2.424" ry="2.425" fill="white"/>
+  <ellipse cx="0.303" cy="7.885" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.752" cy="7.885" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="11.207" cy="7.875" rx="1.515" ry="1.515" fill="white"/>
+  <ellipse cx="16.662" cy="7.883" rx="1.818" ry="1.818" fill="white"/>
+  <ellipse cx="22.114" cy="7.883" rx="2.121" ry="2.122" fill="white"/>
+  <ellipse cx="27.578" cy="7.883" rx="2.121" ry="2.122" fill="white"/>
+  <ellipse cx="0.303" cy="13.34" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.752" cy="13.34" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="11.212" cy="13.335" rx="1.212" ry="1.212" fill="white"/>
+  <ellipse cx="16.672" cy="13.332" rx="1.515" ry="1.515" fill="white"/>
+  <ellipse cx="22.123" cy="13.332" rx="1.818" ry="1.818" fill="white"/>
+  <ellipse cx="27.572" cy="13.332" rx="1.818" ry="1.818" fill="white"/>
+  <ellipse cx="0.303" cy="18.791" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.755" cy="18.794" rx="0.606" ry="0.606" fill="white"/>
+  <ellipse cx="11.214" cy="18.794" rx="0.909" ry="0.909" fill="white"/>
+  <ellipse cx="16.661" cy="18.79" rx="1.212" ry="1.212" fill="white"/>
+  <ellipse cx="22.121" cy="18.789" rx="1.515" ry="1.515" fill="white"/>
+  <ellipse cx="27.577" cy="18.791" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="0.303" cy="24.241" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.755" cy="24.249" rx="0.606" ry="0.606" fill="white"/>
+  <ellipse cx="11.208" cy="24.249" rx="0.606" ry="0.606" fill="white"/>
+  <ellipse cx="16.662" cy="24.241" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="22.123" cy="24.241" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="27.577" cy="24.241" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="0.303" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="5.752" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="11.213" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="16.662" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="22.123" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+  <ellipse cx="27.577" cy="29.698" rx="0.303" ry="0.303" fill="white"/>
+
+  <!-- Taller text (24px), perfectly centered vertically -->
+  <text x="42" y="15" font-size="24">ASET</text>
+</svg>

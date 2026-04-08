@@ -1,0 +1,11 @@
+node_modules
+database
+scripts
+arxiv-bulk
+ASET frontend
+frontend
+uploads
+*.db
+*.zip
+*.pem
+.git

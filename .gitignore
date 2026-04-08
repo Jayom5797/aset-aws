@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Database files (too large for git - host separately)
+database/topics/
+database/topics-backup/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.kiro/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build outputs
+dist/
+build/
+
+# Temporary files
+temp-*.json
+*.tmp
+
+# Backup files
+*.bak
+*~
+
+# Test files
+coverage/
+.nyc_output/
