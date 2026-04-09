@@ -1116,6 +1116,40 @@ app.post('/api/verify-claim', async (req, res) => {
   }
 });
 
+// ─── Shared: Get sources for a claim (with self-healing fallback) ────────────
+async function getSourcesForClaim(claim, dbClient) {
+  const words = claim.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+  const stopWords = new Set(['the','and','that','this','with','from','have','been','were','are','for','can','will','but','not','was','has']);
+  const keywords = words.filter(w => !stopWords.has(w));
+  if (!keywords.length) return [];
+
+  const query = keywords.slice(0, 8).join(' OR ');
+  const result = await dbClient.execute({
+    sql: `SELECT p.id, p.title, p.abstract, p.authors, p.year, p.topic, p.subtopic, p.source
+          FROM papers_fts
+          JOIN papers p ON papers_fts.rowid = p.rowid
+          WHERE papers_fts MATCH ?
+          ORDER BY rank LIMIT 5`,
+    args: [query]
+  });
+
+  if (result.rows.length > 0) return result.rows;
+
+  // Self-healing: fetch from external sources and store permanently
+  try {
+    const { fetchAndStorePapers } = require('./paper-fetcher');
+    const external = await fetchAndStorePapers(claim, dbClient);
+    return external.map(p => ({
+      id: p.id, title: p.title, abstract: p.abstract,
+      authors: JSON.stringify(p.authors ? [p.authors] : []),
+      year: p.year, topic: 'external', subtopic: 'fetched', source: p.source
+    }));
+  } catch (e) {
+    console.error('[getSourcesForClaim] External fetch failed:', e.message);
+    return [];
+  }
+}
+
 // ─── File Upload Config (Mode 3) ────────────────────────────────────────────
 const UPLOAD_DIR = path.join(__dirname, '../uploads');
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -1173,25 +1207,11 @@ app.post('/api/process-document', upload.single('file'), async (req, res) => {
 
     console.log(`[Mode3] Extracted ${claims.length} claims`);
 
-    // Step 3: Get sources for each claim from DB
+    // Step 3: Get sources for each claim from DB (with self-healing fallback)
     const claimResults = await Promise.all(claims.map(async (claim) => {
       try {
-        const words = claim.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
-        const stopWords = new Set(['the','and','that','this','with','from','have','been','were','are','for','can','will','but','not','was','has']);
-        const keywords = words.filter(w => !stopWords.has(w));
-        if (!keywords.length) return { claim, sources: [], error: 'no keywords' };
-
-        const query = keywords.slice(0, 8).join(' OR ');
-        const result = await db.execute({
-          sql: `SELECT p.id, p.title, p.abstract, p.authors, p.year, p.topic, p.subtopic, p.source
-                FROM papers_fts
-                JOIN papers p ON papers_fts.rowid = p.rowid
-                WHERE papers_fts MATCH ?
-                ORDER BY rank LIMIT 5`,
-          args: [query]
-        });
-
-        return { claim, sources: result.rows };
+        const sources = await getSourcesForClaim(claim, db);
+        return { claim, sources };
       } catch (e) {
         return { claim, sources: [], error: e.message };
       }
@@ -1314,22 +1334,8 @@ app.post('/api/process-youtube', async (req, res) => {
 
     const claimResults = await Promise.all(claims.map(async (claim) => {
       try {
-        const words = claim.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
-        const stopWords = new Set(['the','and','that','this','with','from','have','been','were','are','for','can','will','but','not','was','has']);
-        const keywords = words.filter(w => !stopWords.has(w));
-        if (!keywords.length) return { claim, sources: [] };
-
-        const query = keywords.slice(0, 8).join(' OR ');
-        const result = await db.execute({
-          sql: `SELECT p.id, p.title, p.abstract, p.authors, p.year, p.topic, p.subtopic, p.source
-                FROM papers_fts
-                JOIN papers p ON papers_fts.rowid = p.rowid
-                WHERE papers_fts MATCH ?
-                ORDER BY rank LIMIT 5`,
-          args: [query]
-        });
-
-        return { claim, sources: result.rows };
+        const sources = await getSourcesForClaim(claim, db);
+        return { claim, sources };
       } catch (e) {
         return { claim, sources: [], error: e.message };
       }

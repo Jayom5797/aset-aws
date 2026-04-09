@@ -119,33 +119,57 @@ async function searchPubMed(claim, maxResults = 10) {
 
 /**
  * Classify paper into topic/subtopic using keyword matching
+ * Falls back to best-effort classification based on abstract content
  */
 function classifyPaper(title, abstract) {
   const text = `${title} ${abstract}`.toLowerCase();
 
   const topicMap = [
-    ['neuroscience', /brain|neuron|synapse|amygdala|cortex|hippocampus|dopamine|serotonin|cognitive/],
-    ['oncology', /cancer|tumor|carcinoma|chemotherapy|immunotherapy|metastasis/],
-    ['cardiology', /heart|cardiac|cardiovascular|myocardial|arrhythmia|hypertension/],
-    ['genetics-and-genomics', /gene|genome|dna|rna|crispr|sequencing|mutation|chromosome/],
-    ['pharmacology', /drug|pharmacology|clinical trial|efficacy|therapeutic|medication/],
-    ['molecular-biology', /protein|enzyme|folding|ribosome|transcription|amino acid/],
-    ['artificial-intelligence', /machine learning|deep learning|neural network|reinforcement/],
-    ['natural-language-processing', /nlp|language model|bert|gpt|transformer|text classification/],
-    ['quantum-physics', /quantum|qubit|entanglement|superposition|wave function/],
-    ['physical-chemistry', /thermodynamic|reaction|catalyst|molecule|spectroscopy|polymer/],
-    ['epidemiology', /epidemiology|prevalence|incidence|mortality|cohort|risk factor/],
-    ['mental-health', /depression|anxiety|schizophrenia|bipolar|ptsd|psychiatric/],
-    ['black-holes', /black hole|event horizon|hawking|accretion|neutron star/],
-    ['cosmology', /universe|big bang|dark energy|dark matter|cosmic|hubble/],
-    ['robotics', /robot|autonomous|navigation|manipulation|drone|kinematics/],
+    ['neuroscience', /\b(brain|neuron|synapse|amygdala|cortex|hippocampus|dopamine|serotonin|cognitive|memory|alzheimer|parkinson|epilepsy|neurotransmitter|cerebral|limbic)\b/],
+    ['oncology', /\b(cancer|tumor|carcinoma|chemotherapy|immunotherapy|metastasis|oncology|malignant|biopsy|leukemia|lymphoma|melanoma)\b/],
+    ['cardiology', /\b(heart|cardiac|cardiovascular|myocardial|arrhythmia|hypertension|coronary|stroke|ecg|atrial|ventricular)\b/],
+    ['genetics-and-genomics', /\b(gene|genome|dna|rna|crispr|sequencing|mutation|chromosome|allele|snp|mrna|pcr|epigenetic|transcription factor)\b/],
+    ['pharmacology', /\b(drug|pharmacology|clinical trial|efficacy|therapeutic|medication|dose|pharmacokinetic|placebo|adverse effect)\b/],
+    ['molecular-biology', /\b(protein|enzyme|folding|ribosome|translation|amino acid|peptide|antibody|receptor|ligand|binding site)\b/],
+    ['artificial-intelligence', /\b(machine learning|deep learning|neural network|reinforcement learning|generative|diffusion|gan|cnn|lstm|transformer|attention)\b/],
+    ['natural-language-processing', /\b(nlp|language model|bert|gpt|text classification|sentiment|translation|tokeniz|embedding|named entity)\b/],
+    ['computer-vision', /\b(image recognition|object detection|segmentation|convolutional|yolo|resnet|visual|pixel|feature extraction)\b/],
+    ['quantum-physics', /\b(quantum|qubit|entanglement|superposition|wave function|decoherence|quantum computing|bell|hamiltonian)\b/],
+    ['condensed-matter-physics', /\b(superconductor|semiconductor|transistor|band gap|ferromagnet|topological|phase transition|crystal|lattice)\b/],
+    ['nuclear-physics', /\b(nuclear|fission|fusion|radioactive|neutron|proton|isotope|radiation|reactor|decay)\b/],
+    ['physical-chemistry', /\b(thermodynamic|reaction|catalyst|molecule|spectroscopy|polymer|nanomaterial|crystal|synthesis|bond)\b/],
+    ['epidemiology', /\b(epidemiology|prevalence|incidence|mortality|cohort|risk factor|pandemic|outbreak|public health|surveillance)\b/],
+    ['mental-health', /\b(depression|anxiety|schizophrenia|bipolar|ptsd|psychiatric|therapy|antidepressant|cognitive behavioral)\b/],
+    ['robotics', /\b(robot|autonomous|navigation|manipulation|drone|uav|kinematics|actuator|path planning|slam)\b/],
+    ['signal-processing', /\b(signal|filter|fourier|wavelet|noise|compression|modulation|antenna|radar|communication)\b/],
+    ['control-systems', /\b(control system|feedback|pid|stability|transfer function|state space|optimal control|mpc|lyapunov)\b/],
+    ['black-holes', /\b(black hole|event horizon|hawking|singularity|accretion|gravitational collapse|neutron star|quasar)\b/],
+    ['cosmology', /\b(universe|big bang|dark energy|dark matter|cosmic|inflation|hubble|redshift|cmb|galaxy cluster)\b/],
+    ['exoplanets', /\b(exoplanet|habitable zone|transit|radial velocity|kepler|biosignature|planetary atmosphere)\b/],
+    ['evolutionary-biology', /\b(evolution|natural selection|species|phylogen|adaptation|fossil|extinction|speciation|darwin)\b/],
+    ['microbiology', /\b(bacteria|virus|pathogen|antibiotic|infection|microbiome|fungus|parasite|vaccine|immunity)\b/],
+    ['immunology', /\b(immune|antibody|t cell|b cell|cytokine|inflammation|autoimmune|vaccine|antigen|lymphocyte)\b/],
+    ['materials-chemistry', /\b(nanomaterial|graphene|composite|thin film|coating|porous|mof|zeolite|2d material|nanoparticle)\b/],
+    ['electrical-engineering', /\b(circuit|power electronics|voltage|current|transformer|motor|generator|inverter|grid|pcb)\b/],
+    ['mechanical-engineering', /\b(stress|strain|fatigue|fracture|vibration|heat transfer|manufacturing|finite element|fluid mechanics)\b/],
+    ['civil-engineering', /\b(structural|concrete|steel|foundation|bridge|earthquake|geotechnical|construction|pavement)\b/],
+    ['aerospace-engineering', /\b(aerodynamic|propulsion|aircraft|turbine|rocket|satellite|flight|hypersonic|reentry|thrust)\b/],
   ];
 
+  // Score each topic by number of keyword matches (not just first match)
+  let bestTopic = 'instrumentation-and-methods';
+  let bestScore = 0;
+
   for (const [topic, pattern] of topicMap) {
-    if (pattern.test(text)) return { topic, subtopic: 'other' };
+    const matches = text.match(new RegExp(pattern.source, 'gi'));
+    const score = matches ? matches.length : 0;
+    if (score > bestScore) {
+      bestScore = score;
+      bestTopic = topic;
+    }
   }
 
-  return { topic: 'instrumentation-and-methods', subtopic: 'other' };
+  return { topic: bestTopic, subtopic: bestScore > 0 ? 'other' : 'general' };
 }
 
 /**
