@@ -71,29 +71,34 @@ const TrendingPage = () => {
   useEffect(() => {
     if (!containerRef.current || globePoints.length === 0) return;
 
-    const globe = Globe()(containerRef.current)
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
-      .backgroundColor('rgba(0,0,0,0)')
-      .atmosphereColor('#00ffaa')
-      .atmosphereAltitude(0.12)
-      .pointsData(globePoints)
-      .pointLat('lat')
-      .pointLng('lng')
-      .pointColor(() => '#00ffaa')
-      .pointAltitude(0.01)
-      .pointRadius(d => Math.sqrt(d.users) * 0.06)
-      .pointLabel(d => `
-        <div style="background:rgba(0,0,0,0.9);padding:8px 12px;border-radius:8px;border:1px solid #00ffaa">
-          <div style="color:#00ffaa;font-weight:600;font-size:13px">${d.city}, ${d.country}</div>
-          <div style="color:#fff;font-size:11px;margin-top:4px">${d.users} active researchers</div>
-        </div>
-      `);
+    let globe;
+    try {
+      globe = Globe()(containerRef.current)
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .backgroundColor('rgba(0,0,0,0)')
+        .atmosphereColor('#00ffaa')
+        .atmosphereAltitude(0.12)
+        .pointsData(globePoints)
+        .pointLat('lat')
+        .pointLng('lng')
+        .pointColor(() => '#00ffaa')
+        .pointAltitude(0.01)
+        .pointRadius(d => Math.sqrt(d.users) * 0.06)
+        .pointLabel(d => `
+          <div style="background:rgba(0,0,0,0.9);padding:8px 12px;border-radius:8px;border:1px solid #00ffaa">
+            <div style="color:#00ffaa;font-weight:600;font-size:13px">${d.city}, ${d.country}</div>
+            <div style="color:#fff;font-size:11px;margin-top:4px">${d.users} active researchers</div>
+          </div>
+        `);
 
-    globe.controls().autoRotate = true;
-    globe.controls().autoRotateSpeed = 0.4;
-    globeRef.current = globe;
+      globe.controls().autoRotate = true;
+      globe.controls().autoRotateSpeed = 0.4;
+      globeRef.current = globe;
+    } catch (e) {
+      console.warn('Globe WebGL not available:', e.message);
+    }
 
-    return () => { try { globe._destructor(); } catch(e) {} };
+    return () => { try { globe?._destructor(); } catch(e) {} };
   }, [globePoints]);
 
   const recentVerifications = [
