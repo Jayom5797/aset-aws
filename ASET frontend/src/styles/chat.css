@@ -348,17 +348,253 @@ body.chat-mode {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 2rem 3rem;
+    padding: 1.25rem 3rem 2rem;
     position: relative;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow-x: hidden;
     overflow-y: auto;
     max-width: 100%;
 }
 
+.profile-page {
+    flex: 1;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.2rem 2rem 3.25rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.profile-page::-webkit-scrollbar {
+    display: none;
+}
+
+.profile-page::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 50%;
+    transform: translateX(-50%);
+    width: 520px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(140, 92, 246, 0.2) 0%, rgba(0, 212, 170, 0.07) 42%, transparent 76%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.4rem;
+}
+
+.profile-avatar {
+    width: 108px;
+    height: 108px;
+    border-radius: 32px;
+    background: linear-gradient(135deg, #00d4aa 0%, #4f7cff 52%, #8b5cf6 100%);
+    box-shadow: 0 22px 48px rgba(28, 117, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #061114;
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.profile-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+}
+
+.profile-name {
+    font-size: 2.35rem;
+    font-weight: 750;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.profile-email {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 1rem;
+}
+
+.profile-hero-copy::after {
+    content: 'Account preferences and security';
+    color: rgba(105, 206, 255, 0.7);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.35rem;
+}
+
+.profile-alert {
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    backdrop-filter: blur(12px);
+}
+
+.profile-alert.success {
+    color: #7cf7d0;
+    background: rgba(0, 212, 170, 0.1);
+    border: 1px solid rgba(0, 212, 170, 0.28);
+}
+
+.profile-alert.error {
+    color: #ff8c8c;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+.profile-panel {
+    background: linear-gradient(180deg, rgba(10, 14, 20, 0.94) 0%, rgba(5, 8, 12, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 1.95rem 2rem;
+    margin-bottom: 1.35rem;
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.44);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(99, 102, 241, 0.12), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(0, 212, 170, 0.09), transparent 28%);
+    pointer-events: none;
+}
+
+.profile-section-header {
+    margin-bottom: 1.35rem;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-kicker {
+    color: rgba(105, 206, 255, 0.72);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+}
+
+.profile-section-header h3 {
+    color: #fff;
+    font-size: 1.45rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+}
+
+.profile-name-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-input {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.035) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 18px;
+    padding: 1rem 1.05rem;
+    color: #f5fbff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-input::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.profile-input:focus {
+    border-color: rgba(0, 212, 170, 0.42);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.08);
+}
+
+.profile-password-input {
+    width: 100%;
+}
+
+.profile-password-field {
+    padding-right: 3rem !important;
+}
+
+.profile-password-toggle {
+    color: rgba(255, 255, 255, 0.42) !important;
+}
+
+.profile-password-toggle:hover {
+    color: #8fead7 !important;
+}
+
+.profile-btn {
+    border-radius: 18px;
+    padding: 1rem 1.35rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.profile-btn:hover {
+    transform: translateY(-1px);
+}
+
+.profile-btn-primary {
+    color: #061114;
+    background: linear-gradient(135deg, #00d4aa 0%, #5bf5d1 100%);
+    border: 1px solid rgba(91, 245, 209, 0.3);
+    box-shadow: 0 14px 34px rgba(0, 212, 170, 0.2);
+}
+
+.profile-btn-primary:hover {
+    box-shadow: 0 18px 36px rgba(0, 212, 170, 0.24);
+}
+
+.profile-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.profile-btn-wide {
+    width: 100%;
+}
+
 .welcome-logo {
     position: absolute;
-    top: 2rem;
+    top: 1.2rem;
     left: 3rem;
     z-index: 10;
 }
@@ -408,7 +644,7 @@ body.chat-mode {
     width: 100%;
     max-width: 720px;
     padding: 0;
-    margin: 0;
+    margin: 3.1rem 0 0;
 }
 
 .welcome-screen h1 {
@@ -439,6 +675,7 @@ body.chat-mode {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     z-index: 1;
+    margin-top: 0.15rem;
     margin-bottom: 0;
     width: 100%;
     max-width: 860px;
@@ -1015,6 +1252,16 @@ body.chat-mode {
     gap: 0.75rem;
 }
 
+.history-mobile-label {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.35rem;
+}
+
 .chat-name-text {
     flex: 1;
     color: rgba(255, 255, 255, 0.9);
@@ -1260,11 +1507,11 @@ body.chat-mode {
     }
 
     .welcome-screen {
-        padding: 1.5rem 1rem;
+        padding: 1rem 1rem 1.5rem;
     }
 
     .welcome-logo {
-        top: 1rem;
+        top: 0.85rem;
         left: 1rem;
     }
 
@@ -1280,12 +1527,59 @@ body.chat-mode {
         font-size: 1.25rem;
     }
 
+    .welcome-text {
+        margin-top: 2.8rem;
+        max-width: 520px;
+    }
+
     .suggestion-cards {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        justify-content: stretch;
+        gap: 0.75rem;
+        max-width: 520px;
+        width: 100%;
     }
 
     .suggestion-card {
-        min-width: auto;
+        width: 100%;
+        min-height: 0;
+        padding: 0.85rem 0.9rem;
+        border-radius: 10px;
+    }
+
+    .card-title {
+        font-size: 0.9rem;
+        line-height: 1.2;
+        margin-bottom: 0.3rem;
+    }
+
+    .card-desc {
+        font-size: 0.75rem;
+        line-height: 1.35;
+    }
+
+    .input-container {
+        max-width: 520px;
+    }
+
+    .input-box {
+        padding: 0.9rem 1rem 2.35rem 1rem;
+    }
+
+    .input-box input {
+        font-size: 1rem;
+    }
+
+    .attach-btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .send-btn {
+        width: 40px;
+        height: 40px;
+        bottom: 1rem;
+        right: 1rem;
     }
 
     .messages-area {
@@ -1313,7 +1607,430 @@ body.chat-mode {
         padding: 1rem;
     }
 
+    .profile-page {
+        padding: 1.5rem 1rem 2rem;
+    }
+
+    .profile-hero {
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+        padding: 0;
+    }
+
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        border-radius: 22px;
+        font-size: 1.7rem;
+    }
+
+    .profile-name {
+        font-size: 1.8rem;
+    }
+
+    .profile-email {
+        font-size: 0.88rem;
+    }
+
+    .profile-panel {
+        padding: 1.3rem;
+        border-radius: 22px;
+    }
+
+    .profile-section-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .profile-name-form {
+        grid-template-columns: 1fr;
+    }
+
     .history-view-header h2 {
         font-size: 1.5rem;
+    }
+
+    .history-search-bar {
+        padding: 0.85rem 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .history-table-container {
+        background: transparent;
+        border: none;
+        overflow: visible;
+    }
+
+    .history-table {
+        display: block;
+    }
+
+    .history-table thead {
+        display: none;
+    }
+
+    .history-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+    }
+
+    .history-table tbody tr {
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.84);
+        padding: 0.95rem;
+    }
+
+    .history-table td {
+        display: block;
+        padding: 0;
+        border: none;
+        background: transparent;
+        font-size: 0.92rem;
+    }
+
+    .history-table td + td {
+        margin-top: 0.9rem;
+    }
+
+    .history-mobile-label {
+        display: block;
+    }
+
+    .chat-name-cell {
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .chat-name-text {
+        font-size: 0.98rem;
+        line-height: 1.45;
+        word-break: break-word;
+    }
+
+    .edit-name-btn {
+        opacity: 1;
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+    }
+
+    .action-btn {
+        justify-content: center;
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-screen {
+        padding: 0.85rem 0.75rem 1.25rem;
+        gap: 0.8rem;
+    }
+
+    .welcome-logo {
+        top: 0.75rem;
+        left: 0.75rem;
+    }
+
+    .welcome-logo img {
+        height: 28px;
+    }
+
+    .user-dropdown {
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .user-btn {
+        padding: 0.3rem 0.65rem 0.3rem 0.3rem;
+        gap: 0.45rem;
+        font-size: 0.82rem;
+    }
+
+    .user-avatar-small {
+        width: 28px;
+        height: 28px;
+        font-size: 0.68rem;
+    }
+
+    .profile-page {
+        padding: 1rem 0.75rem 1.5rem;
+    }
+
+    .profile-hero {
+        align-items: flex-start;
+        gap: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-avatar {
+        width: 62px;
+        height: 62px;
+        border-radius: 18px;
+        font-size: 1.2rem;
+    }
+
+    .profile-name {
+        font-size: 1.45rem;
+    }
+
+    .profile-email {
+        font-size: 0.82rem;
+        line-height: 1.35;
+        word-break: break-word;
+    }
+
+    .profile-hero-copy::after {
+        font-size: 0.62rem;
+        margin-top: 0.28rem;
+    }
+
+    .profile-panel {
+        padding: 1rem;
+        border-radius: 18px;
+    }
+
+    .profile-kicker {
+        font-size: 0.64rem;
+    }
+
+    .profile-section-header h3 {
+        font-size: 1.06rem;
+    }
+
+    .profile-input {
+        padding: 0.85rem 0.92rem;
+        font-size: 0.9rem;
+        border-radius: 14px;
+    }
+
+    .profile-btn {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+        font-size: 0.88rem;
+    }
+
+    .history-view {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .history-view-header {
+        margin-bottom: 0.9rem;
+    }
+
+    .history-view-header h2 {
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+    }
+
+    .history-search-bar {
+        padding: 0.78rem 0.9rem;
+        border-width: 1px;
+        border-radius: 14px;
+        background: rgba(7, 10, 14, 0.92);
+        backdrop-filter: blur(14px);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .history-search-bar input {
+        font-size: 0.88rem;
+    }
+
+    .history-table tbody {
+        gap: 0.9rem;
+    }
+
+    .history-table tbody tr {
+        padding: 1rem;
+        border-radius: 16px;
+        background:
+            linear-gradient(180deg, rgba(18, 24, 32, 0.84) 0%, rgba(8, 10, 14, 0.94) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .history-table td {
+        font-size: 0.84rem;
+    }
+
+    .history-table td + td {
+        margin-top: 0.85rem;
+    }
+
+    .history-mobile-label {
+        font-size: 0.62rem;
+        margin-bottom: 0.34rem;
+        letter-spacing: 0.08em;
+        color: rgba(122, 210, 255, 0.7);
+    }
+
+    .chat-name-text {
+        font-size: 1.05rem;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .chat-name-cell {
+        align-items: center;
+        gap: 0.65rem;
+    }
+
+    .edit-name-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        border-width: 1px;
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.78);
+    }
+
+    .edit-name-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(0, 212, 170, 0.45);
+        color: #00d4aa;
+    }
+
+    .history-table td:nth-child(3) span[style] {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.65rem !important;
+        border-radius: 999px !important;
+        font-size: 0.74rem !important;
+        font-weight: 700 !important;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .action-btn {
+        padding: 0.82rem 0.9rem;
+        font-size: 0.84rem;
+        border-width: 1px;
+        border-radius: 12px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .action-btn svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .action-btn:not(.delete-btn) {
+        background: rgba(0, 212, 170, 0.08);
+        box-shadow: inset 0 0 0 1px rgba(0, 212, 170, 0.08);
+    }
+
+    .action-btn.delete-btn {
+        background: rgba(239, 68, 68, 0.05);
+    }
+
+    .welcome-text {
+        margin-top: 2.35rem;
+        max-width: 320px;
+    }
+
+    .welcome-screen h1 {
+        font-size: 1.55rem;
+        line-height: 1.15;
+    }
+
+    .welcome-screen h2 {
+        font-size: 0.92rem;
+        line-height: 1.2;
+    }
+
+    .welcome-text p {
+        font-size: 0.72rem !important;
+        margin-top: 0.3rem !important;
+        line-height: 1.3;
+    }
+
+    .suggestion-cards {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+        max-width: 320px;
+    }
+
+    .suggestion-card {
+        width: 100%;
+        min-height: 0;
+        padding: 0.9rem 0.95rem;
+    }
+
+    .card-title {
+        font-size: 0.98rem;
+        margin-bottom: 0.28rem;
+    }
+
+    .card-desc {
+        font-size: 0.74rem;
+        line-height: 1.3;
+    }
+
+    .input-container {
+        max-width: 320px;
+    }
+
+    .input-box {
+        border-radius: 12px;
+        padding: 0.95rem 1rem 2.35rem 1rem;
+        gap: 0.6rem;
+    }
+
+    .input-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .input-box .top-row {
+        gap: 0.45rem;
+    }
+
+    .input-box input {
+        font-size: 0.86rem;
+    }
+
+    .attach-section {
+        gap: 0.45rem;
+    }
+
+    .attach-btn {
+        padding: 0.32rem 0.65rem;
+        border-radius: 16px;
+        font-size: 0.7rem;
+        transform: translateY(14px);
+    }
+
+    .file-names {
+        font-size: 0.68rem;
+        max-width: 110px;
+        transform: translateY(14px);
+    }
+
+    .send-btn {
+        width: 38px;
+        height: 38px;
+        bottom: 0.85rem;
+        right: 0.85rem;
+    }
+
+    .send-btn svg {
+        width: 18px;
+        height: 18px;
     }
 }

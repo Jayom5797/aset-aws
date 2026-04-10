@@ -12,11 +12,21 @@ const EyeIcon = ({ open }) => open ? (
   </svg>
 );
 
-const PasswordInput = ({ value, onChange, placeholder = '••••••••', required = false, minLength, style = {} }) => {
+const PasswordInput = ({
+  value,
+  onChange,
+  placeholder = '........',
+  required = false,
+  minLength,
+  style = {},
+  className = '',
+  inputClassName = '',
+  buttonClassName = ''
+}) => {
   const [show, setShow] = useState(false);
 
   return (
-    <div style={{ position: 'relative', ...style }}>
+    <div className={className} style={{ position: 'relative', ...style }}>
       <input
         type={show ? 'text' : 'password'}
         value={value}
@@ -24,11 +34,13 @@ const PasswordInput = ({ value, onChange, placeholder = '•••••••�
         placeholder={placeholder}
         required={required}
         minLength={minLength}
+        className={inputClassName}
         style={{ width: '100%', paddingRight: 44, boxSizing: 'border-box' }}
       />
       <button
         type="button"
         onClick={() => setShow(s => !s)}
+        className={buttonClassName}
         style={{
           position: 'absolute',
           right: 12,

@@ -156,8 +156,12 @@ const HistoryView = ({ onLoadChat, onClose }) => {
                         ) : (
                             filteredChats.map((chat, index) => (
                                 <tr key={chat.id}>
-                                    <td>{index + 1}</td>
                                     <td>
+                                        <span className="history-mobile-label">Sr No.</span>
+                                        {index + 1}
+                                    </td>
+                                    <td>
+                                        <span className="history-mobile-label">Chat Name</span>
                                         <div className="chat-name-cell">
                                             <span className="chat-name-text">{chat.name}</span>
                                             <button
@@ -173,6 +177,7 @@ const HistoryView = ({ onLoadChat, onClose }) => {
                                         </div>
                                     </td>
                                     <td>
+                                        <span className="history-mobile-label">Mode</span>
                                         {(() => {
                                             const m = getModeFromChat(chat);
                                             const cfg = MODE_LABELS[m] || MODE_LABELS.claim;
@@ -183,8 +188,12 @@ const HistoryView = ({ onLoadChat, onClose }) => {
                                             );
                                         })()}
                                     </td>
-                                    <td>{formatDate(chat.lastUpdated)}</td>
                                     <td>
+                                        <span className="history-mobile-label">Last Updated</span>
+                                        {formatDate(chat.lastUpdated)}
+                                    </td>
+                                    <td>
+                                        <span className="history-mobile-label">Actions</span>
                                         <div className="action-buttons">
                                             <button
                                                 className="action-btn"
