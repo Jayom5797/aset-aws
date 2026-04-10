@@ -54,9 +54,221 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 // Static frontend removed - served separately via Vite (ASET frontend)
 
-// Simple health check (fast response for Railway)
+// Simple health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ name: 'ASET API', version: '2.0.0', status: 'ok', docs: '/openapi.json' });
+});
+
+// OpenAPI spec for KAYO and other tools
+app.get('/openapi.json', (req, res) => {
+  res.json({
+    openapi: '3.0.0',
+    info: {
+      title: 'ASET API',
+      version: '2.0.0',
+      description: 'Academic Safety and Evidencing Truth — Scientific claim verification API'
+    },
+    servers: [{ url: 'https://dhhmp9ef9u.us-east-1.awsapprunner.com' }],
+    paths: {
+      '/health': {
+        get: {
+          summary: 'Health check',
+          responses: { '200': { description: 'OK' } }
+        }
+      },
+      '/api/get-sources': {
+        post: {
+          summary: 'Search papers for a claim',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    claim: { type: 'string', description: 'Scientific claim to verify' },
+                    limit: { type: 'integer', default: 50 },
+                    filters: { type: 'object' }
+                  },
+                  required: ['claim']
+                }
+              }
+            }
+          },
+          responses: {
+            '200': {
+              description: 'Papers matching the claim',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      sources: { type: 'array' },
+                      totalSources: { type: 'integer' },
+                      domain: { type: 'string' },
+                      queryTime: { type: 'integer' }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      '/api/verify-claim': {
+        post: {
+          summary: 'Verify a claim against papers using AI',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    claim: { type: 'string' },
+                    papers: { type: 'array' },
+                    maxPapers: { type: 'integer', default: 5 }
+                  },
+                  required: ['claim', 'papers']
+                }
+              }
+            }
+          },
+          responses: {
+            '200': {
+              description: 'Verification result',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      verificationScore: { type: 'integer' },
+                      verdict: { type: 'string' },
+                      confidence: { type: 'string' },
+                      summary: { type: 'string' }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      '/api/process-document': {
+        post: {
+          summary: 'Upload document and verify all claims (Mode 3)',
+          requestBody: {
+            required: true,
+            content: {
+              'multipart/form-data': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    file: { type: 'string', format: 'binary', description: 'PDF, DOCX, TXT, or image' }
+                  }
+                }
+              }
+            }
+          },
+          responses: {
+            '200': { description: 'Verification report for all claims in document' }
+          }
+        }
+      },
+      '/api/process-youtube': {
+        post: {
+          summary: 'Verify claims from a YouTube video transcript (Mode 2)',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    url: { type: 'string', description: 'YouTube video URL' }
+                  },
+                  required: ['url']
+                }
+              }
+            }
+          },
+          responses: {
+            '200': { description: 'Verification report for all claims in transcript' }
+          }
+        }
+      },
+      '/api/stats': {
+        get: {
+          summary: 'Database statistics',
+          responses: {
+            '200': {
+              description: 'Paper count and topic stats',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      totalPapers: { type: 'integer' },
+                      totalTopics: { type: 'integer' },
+                      yearRange: { type: 'object' }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      '/api/auth/register': {
+        post: {
+          summary: 'Register a new user',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    email: { type: 'string' },
+                    password: { type: 'string' },
+                    name: { type: 'string' }
+                  },
+                  required: ['email', 'password']
+                }
+              }
+            }
+          },
+          responses: { '200': { description: 'JWT token and user object' } }
+        }
+      },
+      '/api/auth/login': {
+        post: {
+          summary: 'Login',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    email: { type: 'string' },
+                    password: { type: 'string' }
+                  },
+                  required: ['email', 'password']
+                }
+              }
+            }
+          },
+          responses: { '200': { description: 'JWT token and user object' } }
+        }
+      }
+    }
+  });
 });
 
 // Initialize database tables for auth and chat history
