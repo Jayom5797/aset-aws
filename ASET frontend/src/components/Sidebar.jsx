@@ -26,6 +26,18 @@ const Sidebar = ({ isExpanded, onToggle, activeItem, onItemClick, onNewChat }) =
                 </button>
 
                 <button
+                    className="sidebar-item"
+                    onClick={() => onItemClick('home')}
+                    title="Go to Home"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span className="sidebar-text">Go to Home</span>
+                </button>
+
+                <button
                     className={`sidebar-item ${activeItem === 'current-chat' ? 'active' : ''}`}
                     onClick={() => onItemClick('current-chat')}
                 >
@@ -71,15 +83,6 @@ const Sidebar = ({ isExpanded, onToggle, activeItem, onItemClick, onNewChat }) =
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     <span className="sidebar-text">Profile</span>
-                </button>
-
-                <button className="sidebar-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                    <span className="sidebar-text">About</span>
                 </button>
             </div>
         </aside>

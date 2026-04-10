@@ -5,7 +5,7 @@ import { DocumentVerifier, YouTubeVerifier } from './DocumentVerifier';
 
 const MODES = [
   { id: 'claim',    label: '💬 Single Claim',  desc: 'Type a claim to verify' },
-  { id: 'youtube',  label: '▶️ YouTube',        desc: 'Verify a video transcript' },
+  { id: 'youtube',  label: 'YouTube',           desc: 'Verify a video transcript', isYT: true },
   { id: 'document', label: '📄 Document',       desc: 'Upload PDF, DOCX, or image' },
 ];
 
@@ -105,10 +105,19 @@ const WelcomeScreen = ({ userName, onSendMessage }) => {
               fontWeight: mode === m.id ? 700 : 400,
               cursor: 'pointer',
               transition: 'all 0.2s',
-              letterSpacing: '0.3px'
+              letterSpacing: '0.3px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6
             }}
           >
-            {m.label}
+            {m.isYT ? (
+              <svg width="16" height="12" viewBox="0 0 24 17" fill="none">
+                <rect width="24" height="17" rx="4" fill="#FF0000"/>
+                <polygon points="9.5,4.5 9.5,12.5 17,8.5" fill="white"/>
+              </svg>
+            ) : null}
+            {m.isYT ? 'YouTube' : m.label}
           </button>
         ))}
       </div>

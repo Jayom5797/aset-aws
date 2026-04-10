@@ -206,7 +206,12 @@ export const YouTubeVerifier = ({ onClose }) => {
       {!result && (
         <form onSubmit={handleSubmit}>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 16, padding: '24px' }}>
-            <div style={{ fontSize: 36, textAlign: 'center', marginBottom: 16 }}>▶️</div>
+            <div style={{ textAlign: 'center', marginBottom: 16 }}>
+              <svg width="64" height="45" viewBox="0 0 64 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="45" rx="10" fill="#FF0000"/>
+                <polygon points="25,12 25,33 45,22.5" fill="white"/>
+              </svg>
+            </div>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, textAlign: 'center', marginBottom: 20 }}>
               Paste any YouTube URL — ASET extracts the transcript, identifies all factual claims, and verifies each one against peer-reviewed research.
             </div>

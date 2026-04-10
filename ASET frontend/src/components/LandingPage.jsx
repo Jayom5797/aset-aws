@@ -1,7 +1,14 @@
+import React from 'react';
 import heroVideo from '../assects/videos/hero-background.mp4';
 import logoIcon from '../assects/icons/logo.svg';
+import PaperSearchPage from './PaperSearchPage';
 
-const LandingPage = ({ onGetStarted }) => {
+const LandingPage = ({ onGetStarted, isLoggedIn = false, onGoToApp }) => {
+  const [showPaperSearch, setShowPaperSearch] = React.useState(false);
+
+  if (showPaperSearch) {
+    return <PaperSearchPage onBack={() => setShowPaperSearch(false)} />;
+  }
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -24,15 +31,22 @@ const LandingPage = ({ onGetStarted }) => {
             <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Team</a>
             <a href="#tech" onClick={(e) => { e.preventDefault(); scrollToSection('tech'); }}>Technology</a>
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
+            <a href="#search" onClick={(e) => { e.preventDefault(); setShowPaperSearch(true); }} style={{ color: '#00ffaa', fontWeight: 600 }}>🔍 Search Papers</a>
           </div>
           
-          <button className="navbar-cta" onClick={onGetStarted}>
-            Get Started
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </button>
+          {isLoggedIn ? (
+            <button className="navbar-cta" onClick={onGoToApp}>
+              ← Back to App
+            </button>
+          ) : (
+            <button className="navbar-cta" onClick={onGetStarted}>
+              Get Started
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          )}
         </div>
       </nav>
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import ForgotPassword from './ForgotPassword';
+import PasswordInput from './PasswordInput';
 
 const Login = ({ onSwitchToRegister }) => {
   const [email, setEmail] = useState('');
@@ -47,7 +48,7 @@ const Login = ({ onSwitchToRegister }) => {
           
           <div className="form-group">
             <label>Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
+            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           
           <button type="submit" className="auth-button" disabled={loading}>

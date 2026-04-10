@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
+import PasswordInput from './PasswordInput';
 
 const ProfilePage = ({ onClose }) => {
   const { user, login } = useAuth();
@@ -84,10 +85,8 @@ const ProfilePage = ({ onClose }) => {
       <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: 24 }}>
         <h3 style={{ color: '#fff', marginBottom: 16, fontSize: 16 }}>Change Password</h3>
         <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} placeholder="Current password" required
-            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 14px', color: '#fff', fontSize: 14, outline: 'none' }} />
-          <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="New password (min 6 chars)" required
-            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 14px', color: '#fff', fontSize: 14, outline: 'none' }} />
+          <PasswordInput value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} placeholder="Current password" required />
+          <PasswordInput value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="New password (min 6 chars)" required minLength={6} />
           <button type="submit" disabled={loading} style={{ background: 'rgba(0,255,170,0.15)', border: '1px solid rgba(0,255,170,0.4)', color: '#00ffaa', borderRadius: 10, padding: '10px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
             {loading ? 'Updating...' : 'Change Password'}
           </button>

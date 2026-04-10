@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../services/api';
+import PasswordInput from './PasswordInput';
 
 const ForgotPassword = ({ onBack }) => {
   const [step, setStep] = useState('email'); // 'email' | 'otp'
@@ -78,7 +79,7 @@ const ForgotPassword = ({ onBack }) => {
             </div>
             <div className="form-group">
               <label>New Password</label>
-              <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required placeholder="••••••••" minLength={6} />
+              <PasswordInput value={newPassword} onChange={e => setNewPassword(e.target.value)} required minLength={6} />
             </div>
             <button type="submit" className="auth-button" disabled={loading}>
               {loading ? 'Resetting...' : 'Reset Password'}

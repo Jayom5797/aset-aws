@@ -18,6 +18,7 @@ function AppContent() {
   const { isAuthenticated, loading, user } = useAuth();
   const [showAuth, setShowAuth] = React.useState(false);
   const [showRegister, setShowRegister] = React.useState(false);
+  const [showLanding, setShowLanding] = React.useState(false); // logged-in user viewing landing
   const { isExpanded, activeItem, toggleSidebar, setActive } = useSidebar();
   const [currentView, setCurrentView] = React.useState('welcome');
   const [messages, setMessages] = React.useState([]);
@@ -81,6 +82,9 @@ function AppContent() {
       setCurrentView('profile');
     } else if (item === 'settings') {
       setCurrentView('settings');
+    } else if (item === 'home') {
+      setShowLanding(true);
+      document.body.classList.remove('chat-mode');
     }
   };
 
@@ -109,6 +113,13 @@ function AppContent() {
 
   if (loading) {
     return <div className="loading-screen">Loading...</div>;
+  }
+
+  // Authenticated user viewing landing page
+  if (isAuthenticated && showLanding) {
+    // Remove chat-mode so landing page can scroll
+    document.body.classList.remove('chat-mode');
+    return <LandingPage onGetStarted={() => setShowLanding(false)} isLoggedIn={true} onGoToApp={() => setShowLanding(false)} />;
   }
 
   if (!isAuthenticated) {
