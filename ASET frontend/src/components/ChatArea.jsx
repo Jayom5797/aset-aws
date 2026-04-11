@@ -9,7 +9,13 @@ import { chatService } from '../services/chatService';
 import auroraVideo from '../assects/videos/Aurora.mp4';
 
 const ChatArea = ({ userName = 'User', currentView, setCurrentView, messages, setMessages, chatName, setChatName, onLoadChat }) => {
+    const [isSending, setIsSending] = useState(false);
+
     const handleSendMessage = async (messageText, files = []) => {
+        if (isSending) return;
+
+        setIsSending(true);
+
         // Add user message
         const userMessage = {
             type: 'user',
@@ -45,6 +51,8 @@ const ChatArea = ({ userName = 'User', currentView, setCurrentView, messages, se
                 timestamp: new Date().toISOString()
             };
             setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -75,6 +83,7 @@ const ChatArea = ({ userName = 'User', currentView, setCurrentView, messages, se
                         messages={messages}
                         chatName={chatName}
                         onSendMessage={handleSendMessage}
+                        isSending={isSending}
                     />
                 )}
 

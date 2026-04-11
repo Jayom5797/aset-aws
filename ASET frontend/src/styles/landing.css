@@ -78,6 +78,9 @@
 }
 
 .navbar-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 0.95rem;
@@ -190,8 +193,10 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.badge-icon {
-  font-size: 18px;
+.badge-icon,
+.nav-link-icon {
+  color: currentColor;
+  flex-shrink: 0;
 }
 
 .hero-logo {
@@ -380,8 +385,22 @@
 }
 
 .feature-icon {
-  font-size: 48px;
+  width: 56px;
+  height: 56px;
   margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9b8fc7;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.18), transparent 32%),
+    linear-gradient(135deg, rgba(155, 143, 199, 0.28), rgba(102, 126, 234, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+}
+
+.feature-icon .icon-svg {
+  filter: drop-shadow(0 8px 18px rgba(155, 143, 199, 0.22));
 }
 
 .feature-card h3 {
@@ -673,8 +692,20 @@
 }
 
 .tech-icon {
-  font-size: 40px;
+  width: 48px;
+  height: 48px;
   margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9b8fc7;
+  border-radius: 14px;
+  background: rgba(155, 143, 199, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(155, 143, 199, 0.18);
+}
+
+.icon-svg {
+  display: block;
 }
 
 .tech-name {
